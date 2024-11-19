@@ -3,11 +3,11 @@
 return [
     'components' => [
         'db' => [
-            'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host='.(getenv('MYSQL_HOST')?:'db').';dbname='.(getenv('MYSQL_DATABASE')?:'exchange'),
+            'username' => getenv('MYSQL_USERNAME')?:'exchange',
+            'password' => getenv('MYSQL_PASSWORD')?:'exchange',
+            'charset' => 'utf8mb4',
         ],
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,

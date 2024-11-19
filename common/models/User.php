@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\modules\user\services\interfaces\AuthServiceInterface;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -26,9 +27,16 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
+    const STATUS_UNCONFIRMED = 6;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const STATUSES = [
+        self::STATUS_DELETED => 'Удаленный',
+        self::STATUS_UNCONFIRMED => 'Неподтвержденный',
+        self::STATUS_INACTIVE => 'Неактивный',
+        self::STATUS_ACTIVE => 'Активный',
+    ];
 
     /**
      * {@inheritdoc}
@@ -72,7 +80,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return Yii::$container->get(AuthServiceInterface::class)->findIdentityByAccessToken($token, $type);
     }
 
     /**

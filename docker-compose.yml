@@ -8,6 +8,8 @@ services:
     restart: always
     volumes:
       - db-data:/var/lib/mysql
+    ports:
+      - 3366:3306
     networks:
       - docker-net-exchange
     environment:
