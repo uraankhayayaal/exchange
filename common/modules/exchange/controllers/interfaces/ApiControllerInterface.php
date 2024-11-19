@@ -16,6 +16,9 @@ interface ApiControllerInterface
         description: 'Получение всех курсов с учетом комиссии = 2%',
         tags: ['exchange'],
         security: [['bearerAuth' => []]],
+        parameters: [
+            new OA\Parameter(name: 'filter', in: 'query', schema: new OA\Schema(type: 'string'), description: 'Фильтрация', example: 'USD,RUB,EUR'),
+        ],
         responses: [
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]

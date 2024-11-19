@@ -8,13 +8,16 @@ use yii\data\DataProviderInterface;
 
 abstract class BaseResponseData
 {
+    public const CODE_SUCCESS = 200;
+    public const CODE_ERROR = 422;
     public const STATUS_SUCCESS = 'success';
-    public const STATUS_VALIDATION_ERROR = 'error';
+    public const STATUS_ERROR = 'error';
 
     public static function success($data) : array
     {
         $result = [
             'status' => self::STATUS_SUCCESS,
+            'code' => self::CODE_SUCCESS,
         ];
 
         if ($data instanceof DataProviderInterface) {
@@ -40,8 +43,20 @@ abstract class BaseResponseData
         Yii::$app->response->statusCode = 422;
 
         return [
-            'status' => self::STATUS_VALIDATION_ERROR,
+            'status' => self::STATUS_ERROR,
+            'code' => self::CODE_ERROR,
             'data' => $data->getFirstErrors(),
+        ];
+    }
+
+    public static function errorMessage(string $message) : array
+    {
+        Yii::$app->response->statusCode = 500;
+
+        return [
+            'status' => self::STATUS_ERROR,
+            'code' => self::CODE_ERROR,
+            'data' => $message,
         ];
     }
 

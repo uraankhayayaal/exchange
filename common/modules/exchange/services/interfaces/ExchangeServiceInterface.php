@@ -6,7 +6,7 @@ use common\modules\exchange\forms\ConvertForm;
 
 interface ExchangeServiceInterface
 {
-    public function getRates() : array;
+    public function getRates(string $filter) : array;
 
     public function convert(ConvertForm $convertForm) : array;
 }

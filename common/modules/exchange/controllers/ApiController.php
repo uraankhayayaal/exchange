@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use Yii;
+use yii\httpclient\Exception;
 
 final class ApiController extends BaseApiController implements ApiControllerInterface
 {
@@ -52,9 +53,13 @@ final class ApiController extends BaseApiController implements ApiControllerInte
         ]);
     }
 
-    public function actionRates() : array
+    public function actionRates(?string $filter = null) : array
     {
-        $data = Yii::$container->get(ExchangeServiceInterface::class)->getRates();
+        try {
+            $data = Yii::$container->get(ExchangeServiceInterface::class)->getRates($filter);
+        } catch (Exception $e) {
+            return ConvertDataResponse::errorMessage($e->getMessage());
+        }
 
         return RatesDataResponse::success($data);
     }
@@ -65,7 +70,11 @@ final class ApiController extends BaseApiController implements ApiControllerInte
 
         if ($model->load($this->request->post()) && $model->validate())
         {
-            $data = Yii::$container->get(ExchangeServiceInterface::class)->convert();
+            try {
+                $data = Yii::$container->get(ExchangeServiceInterface::class)->convert();
+            } catch (Exception $e) {
+                return ConvertDataResponse::errorMessage($e->getMessage());
+            }
 
             return ConvertDataResponse::success($data);
         }
