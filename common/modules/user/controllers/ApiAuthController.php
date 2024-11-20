@@ -20,8 +20,7 @@ use Yii;
 
 final class ApiAuthController extends BaseApiController implements ApiAuthControllerInterface
 {
-
-    public function behaviors() : array
+    public function behaviors(): array
     {
         return ArrayHelper::merge(parent::behaviors(), [
             'access' => [
@@ -88,7 +87,7 @@ final class ApiAuthController extends BaseApiController implements ApiAuthContro
         ]);
     }
 
-    public function actionLogin() : array
+    public function actionLogin(): array
     {
         $loginForm = new LoginForm();
 
@@ -105,7 +104,7 @@ final class ApiAuthController extends BaseApiController implements ApiAuthContro
         return TokenResponseData::success($data);
     }
 
-    public function actionRegister() : array
+    public function actionRegister(): array
     {
         $registerForm = new RegisterForm();
 
@@ -122,7 +121,7 @@ final class ApiAuthController extends BaseApiController implements ApiAuthContro
         return UserResponseData::success($data);
     }
 
-    public function actionConfirm() : array
+    public function actionConfirm(): array
     {
         $hash = Yii::$app->getRequest()->getQueryParam('hash');
 
@@ -131,7 +130,7 @@ final class ApiAuthController extends BaseApiController implements ApiAuthContro
         return UserResponseData::success($data);
     }
 
-    public function actionForgotPassword() : array
+    public function actionForgotPassword(): array
     {
         $forgotPasswordForm = new ForgotPasswordForm();
 
@@ -148,7 +147,7 @@ final class ApiAuthController extends BaseApiController implements ApiAuthContro
         return UserResponseData::success($data);
     }
 
-    public function actionResetPassword() : array
+    public function actionResetPassword(): array
     {
         $resetPasswordForm = new ResetPasswordForm();
 
@@ -165,12 +164,12 @@ final class ApiAuthController extends BaseApiController implements ApiAuthContro
         return UserResponseData::success($data);
     }
 
-    public function actionValidateToken() : array
+    public function actionValidateToken(): array
     {
         return UserResponseData::success(Yii::$app->user->identity);
     }
 
-    public function actionRefreshToken() : array
+    public function actionRefreshToken(): array
     {
         $refreshTokenForm = new RefreshTokenForm();
 

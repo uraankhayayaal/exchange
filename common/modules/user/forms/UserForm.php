@@ -32,7 +32,7 @@ class UserForm extends Model
      */
     public $status;
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             [['username', 'email', 'password', 'status'], 'required'],

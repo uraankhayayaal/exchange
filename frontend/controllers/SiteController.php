@@ -253,7 +253,7 @@ class SiteController extends Controller
         }
 
         return $this->render('resendVerificationEmail', [
-            'model' => $model
+            'model' => $model,
         ]);
     }
 }

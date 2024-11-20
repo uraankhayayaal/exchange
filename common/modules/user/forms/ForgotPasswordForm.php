@@ -12,7 +12,7 @@ final class ForgotPasswordForm extends BaseForm
      */
     public $email;
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             [

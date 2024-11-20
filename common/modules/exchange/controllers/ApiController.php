@@ -16,7 +16,7 @@ use yii\httpclient\Exception;
 
 final class ApiController extends BaseApiController implements ApiControllerInterface
 {
-    public function behaviors() : array
+    public function behaviors(): array
     {
         return ArrayHelper::merge(parent::behaviors(), [
             'access' => [
@@ -52,7 +52,7 @@ final class ApiController extends BaseApiController implements ApiControllerInte
         ]);
     }
 
-    public function actionRates(?string $filter = null) : array
+    public function actionRates(?string $filter = null): array
     {
         try {
             $data = Yii::$container->get(ExchangeServiceInterface::class)->getAll($filter);
@@ -63,12 +63,11 @@ final class ApiController extends BaseApiController implements ApiControllerInte
         return RatesDataResponse::success($data);
     }
 
-    public function actionConvert() : array
+    public function actionConvert(): array
     {
         $convertForm = new ConvertForm();
 
-        if ($convertForm->load($this->request->post(), '') && $convertForm->validate())
-        {
+        if ($convertForm->load($this->request->post(), '') && $convertForm->validate()) {
             try {
                 $data = Yii::$container->get(ExchangeServiceInterface::class)->convert($convertForm);
             } catch (Exception $e) {

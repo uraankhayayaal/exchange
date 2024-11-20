@@ -15,7 +15,7 @@ abstract class BaseModule extends Module implements BootstrapInterface
     /**
      * @return Container
      */
-    protected function getContainer() : Container
+    protected function getContainer(): Container
     {
         return Yii::$container;
     }
@@ -27,7 +27,7 @@ abstract class BaseModule extends Module implements BootstrapInterface
      *
      * @return void
      */
-    protected function bindEvent(string $name, string $listenerClass, string $listenerMethod) : void
+    protected function bindEvent(string $name, string $listenerClass, string $listenerMethod): void
     {
         $handler = [
             Yii::createObject($listenerClass),
@@ -39,7 +39,7 @@ abstract class BaseModule extends Module implements BootstrapInterface
     /**
      * @inheritDoc
      */
-    public function bootstrap($app) : void
+    public function bootstrap($app): void
     {
         $this->bindEvents();
         $this->bindRepositories();
@@ -49,15 +49,15 @@ abstract class BaseModule extends Module implements BootstrapInterface
     /**
      * @return void
      */
-    protected function bindEvents() : void {}
+    protected function bindEvents(): void {}
 
     /**
      * @return void
      */
-    protected function bindRepositories() : void {}
+    protected function bindRepositories(): void {}
 
     /**
      * @return void
      */
-    protected function bindServices() : void {}
+    protected function bindServices(): void {}
 }

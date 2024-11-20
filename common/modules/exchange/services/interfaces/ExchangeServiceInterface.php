@@ -8,7 +8,7 @@ use yii\data\DataProviderInterface;
 
 interface ExchangeServiceInterface
 {
-    public function getAll(string $filter) : DataProviderInterface;
+    public function getAll(string $filter): DataProviderInterface;
 
-    public function convert(ConvertForm $convertForm) : ConvertDataResponse;
+    public function convert(ConvertForm $convertForm): ConvertDataResponse;
 }

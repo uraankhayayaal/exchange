@@ -14,14 +14,12 @@ final class ModulesBootstrapComponent extends BaseComponent implements Bootstrap
     /**
      * @inheritDoc
      */
-    public function bootstrap($app) : void
+    public function bootstrap($app): void
     {
-        foreach (array_keys($app->modules) as $id)
-        {
+        foreach (array_keys($app->modules) as $id) {
             $module = $app->getModule($id);
 
-            if ($module instanceof BaseModule)
-            {
+            if ($module instanceof BaseModule) {
                 $module->bootstrap($app);
             }
         }

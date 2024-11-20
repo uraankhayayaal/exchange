@@ -22,7 +22,7 @@ final class RegisterForm extends BaseForm
      */
     public $password;
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             [

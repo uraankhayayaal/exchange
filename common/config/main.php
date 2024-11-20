@@ -1,4 +1,5 @@
 <?php
+
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -13,10 +14,10 @@ return [
             'class' => \yii\caching\FileCache::class,
         ],
         'authManager' => [
-          'class' => 'yii\rbac\DbManager',
+            'class' => 'yii\rbac\DbManager',
         ],
     ],
-	'modules' => [
+    'modules' => [
         'user' => 'common\modules\user\Module',
         'exchange' => 'common\modules\exchange\Module',
     ],

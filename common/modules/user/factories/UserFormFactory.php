@@ -8,7 +8,7 @@ use Yii;
 
 class UserFormFactory
 {
-    static public function getUserFormFromEmail(string $email)
+    public static function getUserFormFromEmail(string $email)
     {
         $userForm = new UserForm();
         $userForm->username = $email;

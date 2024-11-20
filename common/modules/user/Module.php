@@ -17,7 +17,7 @@ class Module extends BaseModule
     /**
      * @inheritDoc
      */
-    protected function bindRepositories() : void
+    protected function bindRepositories(): void
     {
         $this->getContainer()->set(UserRefreshTokenRepositoryInterface::class, UserRefreshTokenRepository::class);
         $this->getContainer()->set(UserRepositoryInterface::class, UserRepository::class);
@@ -26,7 +26,7 @@ class Module extends BaseModule
     /**
      * @inheritDoc
      */
-    protected function bindServices() : void
+    protected function bindServices(): void
     {
         $this->getContainer()->set(AuthServiceInterface::class, AuthService::class);
         $this->getContainer()->set(UserServiceInterface::class, UserService::class);

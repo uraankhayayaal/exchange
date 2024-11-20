@@ -25,10 +25,10 @@ interface SwaggerControllerInterface
     /**
      * Swagger page rendering
      */
-    public function actionIndex() : string;
+    public function actionIndex(): string;
 
     /**
      * Action to get swagger configuration
      */
-    public function actionOpenapi() : string;
+    public function actionOpenapi(): string;
 }

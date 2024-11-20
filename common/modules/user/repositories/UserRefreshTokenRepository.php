@@ -9,12 +9,12 @@ use common\modules\user\repositories\interfaces\UserRefreshTokenRepositoryInterf
 
 final class UserRefreshTokenRepository extends BaseRepository implements UserRefreshTokenRepositoryInterface
 {
-    public function getModelClass() : string
+    public function getModelClass(): string
     {
         return UserRefreshToken::class;
     }
 
-    public function getActiveUserRefreshTokenByRefreshToken(string $refreshToken) : ?UserRefreshToken
+    public function getActiveUserRefreshTokenByRefreshToken(string $refreshToken): ?UserRefreshToken
     {
         return UserRefreshToken::find()->joinWith('user')->where([
             'refresh_token' => $refreshToken,

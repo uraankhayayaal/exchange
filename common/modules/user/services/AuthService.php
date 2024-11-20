@@ -32,12 +32,11 @@ final class AuthService implements AuthServiceInterface
         $this->userRepository = $userRepository;
     }
 
-    public function login(LoginForm $loginForm) : array
+    public function login(LoginForm $loginForm): array
     {
         $user = $this->userRepository->getActiveUserByEmail($loginForm->email);
 
-        if ($user === null)
-        {
+        if ($user === null) {
             throw new HttpException(404, 'User not found.');
         }
 
@@ -51,9 +50,9 @@ final class AuthService implements AuthServiceInterface
         ];
     }
 
-    public function generateAccessToken(User $user) : string
+    public function generateAccessToken(User $user): string
     {
-        $expiresAt = (new DateTimeImmutable)->modify('+12 hours');
+        $expiresAt = (new DateTimeImmutable())->modify('+12 hours');
 
         $builder = Yii::$app->jwt->getBuilder()->withClaim('uid', $user->id);
 
@@ -67,7 +66,7 @@ final class AuthService implements AuthServiceInterface
         return $token->toString();
     }
 
-    public function generateRefreshToken(User $user) : string
+    public function generateRefreshToken(User $user): string
     {
         $userRefreshToken = new UserRefreshToken();
 
@@ -81,7 +80,7 @@ final class AuthService implements AuthServiceInterface
         return $userRefreshToken->refresh_token;
     }
 
-    public function register(RegisterForm $registerForm) : User
+    public function register(RegisterForm $registerForm): User
     {
         $user = Yii::$app->db->transaction(function () use ($registerForm) {
             $user = new User();
@@ -102,7 +101,7 @@ final class AuthService implements AuthServiceInterface
         return $user;
     }
 
-    public function sendUrlForConfirmByMail(User $user) : bool
+    public function sendUrlForConfirmByMail(User $user): bool
     {
         $message = Yii::$app->getMailer()->compose();
 
@@ -117,7 +116,7 @@ final class AuthService implements AuthServiceInterface
         return $message->send();
     }
 
-    public function getUrlForConfirm(string $emailConfirmToken) : string
+    public function getUrlForConfirm(string $emailConfirmToken): string
     {
         $params = [
             'activate-account',
@@ -127,12 +126,11 @@ final class AuthService implements AuthServiceInterface
         return Yii::$app->urlManager->createAbsoluteUrl($params);
     }
 
-    public function confirm(string $emailConfirmToken) : User
+    public function confirm(string $emailConfirmToken): User
     {
         $user = $this->userRepository->getUnconfirmedUserByEmailConfirmToken($emailConfirmToken);
 
-        if ($user === null)
-        {
+        if ($user === null) {
             throw new HttpException(404, 'The user with this email confirm token was not found.');
         }
 
@@ -144,12 +142,11 @@ final class AuthService implements AuthServiceInterface
         return $this->userRepository->update($user, $attributes);
     }
 
-    public function forgotPassword(ForgotPasswordForm $forgotPasswordForm) : User
+    public function forgotPassword(ForgotPasswordForm $forgotPasswordForm): User
     {
         $user = $this->userRepository->getActiveUserByEmail($forgotPasswordForm->email);
 
-        if ($user === null)
-        {
+        if ($user === null) {
             throw new HttpException(404, 'The user with this email was not found.');
         }
 
@@ -162,7 +159,7 @@ final class AuthService implements AuthServiceInterface
         });
     }
 
-    public function sendUrlForResetPasswordByMail(User $user) : bool
+    public function sendUrlForResetPasswordByMail(User $user): bool
     {
         $message = Yii::$app->getMailer()->compose();
 
@@ -177,7 +174,7 @@ final class AuthService implements AuthServiceInterface
         return $message->send();
     }
 
-    public function getUrlForResetPassword(string $passwordResetToken) : string
+    public function getUrlForResetPassword(string $passwordResetToken): string
     {
         $params = [
             'new-password',
@@ -187,12 +184,11 @@ final class AuthService implements AuthServiceInterface
         return Yii::$app->urlManager->createAbsoluteUrl($params);
     }
 
-    public function resetPassword(ResetPasswordForm $resetPasswordForm) : User
+    public function resetPassword(ResetPasswordForm $resetPasswordForm): User
     {
         $user = $this->userRepository->getActiveUserByPasswordResetToken($resetPasswordForm->passwordResetToken);
 
-        if ($user === null)
-        {
+        if ($user === null) {
             throw new HttpException(404, 'The user with this password reset token was not found.');
         }
 
@@ -207,12 +203,11 @@ final class AuthService implements AuthServiceInterface
         });
     }
 
-    public function findIdentityByAccessToken(string $token, string $type = null) : ?User
+    public function findIdentityByAccessToken(string $token, string $type = null): ?User
     {
         $parsedToken = Yii::$app->jwt->parse($token);
 
-        if (Yii::$app->jwt->validate($parsedToken) === false)
-        {
+        if (Yii::$app->jwt->validate($parsedToken) === false) {
             throw new HttpException(403, 'The token is not valid.');
         }
 
@@ -221,19 +216,17 @@ final class AuthService implements AuthServiceInterface
         return $this->userRepository->findIdentityById($id);
     }
 
-    public function refreshToken(RefreshTokenForm $refreshTokenForm) : array
+    public function refreshToken(RefreshTokenForm $refreshTokenForm): array
     {
         $userRefreshToken = $this->userRefreshTokenRepository->getActiveUserRefreshTokenByRefreshToken($refreshTokenForm->refreshToken);
 
-        if ($userRefreshToken === null)
-        {
+        if ($userRefreshToken === null) {
             throw new HttpException(404, 'The user with this refresh token was not found.');
         }
 
         $isExpired = $userRefreshToken->isExpired();
 
-        if ($isExpired)
-        {
+        if ($isExpired) {
             throw new HttpException(498, 'Refresh token invalid.');
         }
 

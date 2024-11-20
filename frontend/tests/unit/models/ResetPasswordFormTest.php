@@ -18,18 +18,18 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
             'user' => [
                 'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php'
+                'dataFile' => codecept_data_dir() . 'user.php',
             ],
         ]);
     }
 
     public function testResetWrongToken()
     {
-        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function() {
+        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function () {
             new ResetPasswordForm('');
         });
 
-        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function() {
+        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function () {
             new ResetPasswordForm('notexistingtoken_1391882543');
         });
     }

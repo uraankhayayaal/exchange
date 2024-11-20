@@ -8,12 +8,12 @@ use common\modules\user\models\User;
 
 final class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    public function getModelClass() : string
+    public function getModelClass(): string
     {
         return User::class;
     }
 
-    public function findIdentityById(int $id) : ?User
+    public function findIdentityById(int $id): ?User
     {
         return User::findOne([
             'id' => $id,
@@ -21,7 +21,7 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
         ]);
     }
 
-    public function getActiveUserByPasswordResetToken(string $passwordResetToken) : ?User
+    public function getActiveUserByPasswordResetToken(string $passwordResetToken): ?User
     {
         return User::findOne([
             'password_reset_token' => $passwordResetToken,
@@ -29,7 +29,7 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
         ]);
     }
 
-    public function getUnconfirmedUserByEmailConfirmToken(string $emailConfirmToken) : ?User
+    public function getUnconfirmedUserByEmailConfirmToken(string $emailConfirmToken): ?User
     {
         return User::findOne([
             'email_confirm_token' => $emailConfirmToken,
@@ -37,7 +37,7 @@ final class UserRepository extends BaseRepository implements UserRepositoryInter
         ]);
     }
 
-    public function getActiveUserByEmail(string $email) : ?User
+    public function getActiveUserByEmail(string $email): ?User
     {
         return User::findOne([
             'email' => $email,

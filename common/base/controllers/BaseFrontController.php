@@ -13,8 +13,8 @@ use yii\web\HttpException;
 abstract class BaseFrontController extends Controller
 {
     // public $layout = '@frontend/themes/bootstrap5/views/layouts/main';
-    
-	public function behaviors()
+
+    public function behaviors()
     {
         return [
             'verbs' => [
@@ -29,9 +29,9 @@ abstract class BaseFrontController extends Controller
     public function afterAction($action, $result)
     {
         $result = parent::afterAction($action, $result);
-        if(!(
-            ($action->id == 'change' && $action->controller->id == 'front' && $action->controller->module->id == 'location') || 
-            ($action->id == 'auth' && $action->controller->id == 'site') || 
+        if (!(
+            ($action->id == 'change' && $action->controller->id == 'front' && $action->controller->module->id == 'location') ||
+            ($action->id == 'auth' && $action->controller->id == 'site') ||
             ($action->id == 'login' && $action->controller->id == 'site') ||
             ($action->id == 'logout' && $action->controller->id == 'site') ||
             ($action->id == 'signup' && $action->controller->id == 'site') ||

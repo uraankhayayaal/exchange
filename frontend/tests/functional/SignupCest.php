@@ -28,11 +28,12 @@ class SignupCest
     public function signupWithWrongEmail(FunctionalTester $I)
     {
         $I->submitForm(
-            $this->formId, [
-            'SignupForm[username]'  => 'tester',
-            'SignupForm[email]'     => 'ttttt',
-            'SignupForm[password]'  => 'tester_password',
-        ]
+            $this->formId,
+            [
+                'SignupForm[username]'  => 'tester',
+                'SignupForm[email]'     => 'ttttt',
+                'SignupForm[password]'  => 'tester_password',
+            ]
         );
         $I->dontSee('Username cannot be blank.', '.invalid-feedback');
         $I->dontSee('Password cannot be blank.', '.invalid-feedback');
@@ -50,7 +51,7 @@ class SignupCest
         $I->seeRecord('common\models\User', [
             'username' => 'tester',
             'email' => 'tester.email@example.com',
-            'status' => \common\models\User::STATUS_INACTIVE
+            'status' => \common\models\User::STATUS_INACTIVE,
         ]);
 
         $I->seeEmailIsSent();

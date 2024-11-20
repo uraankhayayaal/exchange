@@ -8,12 +8,10 @@ use yii\httpclient\Exception;
 
 final class CoincapClient
 {
-
     public function __construct(
         private string $host = 'https://api.coincap.io/v2',
         private Client $client = new Client(),
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<array-key,RateDTO>

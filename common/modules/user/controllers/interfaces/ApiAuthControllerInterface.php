@@ -25,7 +25,7 @@ interface ApiAuthControllerInterface
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]
     )]
-    public function actionLogin() : array;
+    public function actionLogin(): array;
 
     #[OA\Post(
         path: '/user/api-auth/register',
@@ -43,7 +43,7 @@ interface ApiAuthControllerInterface
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]
     )]
-    public function actionRegister() : array;
+    public function actionRegister(): array;
 
     #[OA\Get(
         path: '/user/api-auth/confirm',
@@ -56,7 +56,7 @@ interface ApiAuthControllerInterface
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]
     )]
-    public function actionConfirm() : array;
+    public function actionConfirm(): array;
 
     #[OA\Post(
         path: '/user/api-auth/forgot-password',
@@ -72,7 +72,7 @@ interface ApiAuthControllerInterface
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]
     )]
-    public function actionForgotPassword() : array;
+    public function actionForgotPassword(): array;
 
     #[OA\Post(
         path: '/user/api-auth/reset-password',
@@ -89,7 +89,7 @@ interface ApiAuthControllerInterface
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]
     )]
-    public function actionResetPassword() : array;
+    public function actionResetPassword(): array;
 
     #[OA\Post(
         path: '/user/api-auth/validate-token',
@@ -101,7 +101,7 @@ interface ApiAuthControllerInterface
             new OA\Response(response: 401, description: 'Не разрешено'),
         ]
     )]
-    public function actionValidateToken() : array;
+    public function actionValidateToken(): array;
 
     #[OA\Post(
         path: '/user/api-auth/refresh-token',
@@ -117,5 +117,5 @@ interface ApiAuthControllerInterface
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]
     )]
-    public function actionRefreshToken() : array;
+    public function actionRefreshToken(): array;
 }

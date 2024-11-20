@@ -17,7 +17,7 @@ final class UserObserverBehavior extends BaseBehavior
     /**
      * @inheritDoc
      */
-    public function events() : array
+    public function events(): array
     {
         return [
             BaseActiveRecord::EVENT_AFTER_INSERT => [
@@ -32,10 +32,9 @@ final class UserObserverBehavior extends BaseBehavior
      *
      * @return void
      */
-    public function afterInsert(Event $event) : void
+    public function afterInsert(Event $event): void
     {
-        if ($event->sender->status === User::STATUS_UNCONFIRMED)
-        {
+        if ($event->sender->status === User::STATUS_UNCONFIRMED) {
             Yii::$container->get(AuthServiceInterface::class)->sendUrlForConfirmByMail($event->sender);
         }
     }

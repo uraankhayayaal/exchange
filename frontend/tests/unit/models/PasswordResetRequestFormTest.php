@@ -20,8 +20,8 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
             'user' => [
                 'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php'
-            ]
+                'dataFile' => codecept_data_dir() . 'user.php',
+            ],
         ]);
     }
 
@@ -43,7 +43,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
     public function testSendEmailSuccessfully()
     {
         $userFixture = $this->tester->grabFixture('user', 0);
-        
+
         $model = new PasswordResetRequestForm();
         $model->email = $userFixture['email'];
         $user = User::findOne(['password_reset_token' => $userFixture['password_reset_token']]);

@@ -21,7 +21,7 @@ class ExchangeService extends BaseService implements ExchangeServiceInterface
     {
         $data = $this->getRates();
 
-        return (new RateFilter)->getDataProvider($data, $filter);
+        return (new RateFilter())->getDataProvider($data, $filter);
     }
 
     public function convert(ConvertForm $convertForm): ConvertDataResponse
@@ -44,7 +44,8 @@ class ExchangeService extends BaseService implements ExchangeServiceInterface
 
         return new ConvertDataResponse(
             ...$convertForm->attributes,
-            rate: number_format($currentRate->rateUsd,
+            rate: number_format(
+                $currentRate->rateUsd,
                 CurrencyEnum::tryFrom($convertForm->currency_to) === CurrencyEnum::BTC
                     ? 10
                     : 2,
@@ -75,8 +76,7 @@ class ExchangeService extends BaseService implements ExchangeServiceInterface
     private function getCurrentRateFromForm(array $data, ConvertForm $convertForm): Rate
     {
         $currentRate = current(array_filter($data, function (Rate $rate) use ($convertForm, &$convertDirection) {
-            if (CurrencyEnum::tryFrom($convertForm->currency_from) === CurrencyEnum::USD)
-            {
+            if (CurrencyEnum::tryFrom($convertForm->currency_from) === CurrencyEnum::USD) {
                 $convertDirection = СonvertDirectionEnum::REVERSE;
                 return $rate->symbol === $convertForm->currency_to;
             } else {

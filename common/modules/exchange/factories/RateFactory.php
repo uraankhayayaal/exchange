@@ -8,9 +8,9 @@ use Yii;
 
 class RateFactory
 {
-    const COMMISSION_PERCENT = 2;
+    public const COMMISSION_PERCENT = 2;
 
-    static public function createRateFromRateDTO(RateDTO $rateDTO): Rate
+    public static function createRateFromRateDTO(RateDTO $rateDTO): Rate
     {
         $rate = new Rate();
         $rate->symbol = $rateDTO->symbol;
@@ -18,7 +18,7 @@ class RateFactory
         return $rate;
     }
 
-    static private function getRateAfterCommission(float $value): float
+    private static function getRateAfterCommission(float $value): float
     {
         return $value - ($value * self::COMMISSION_PERCENT / 100);
     }

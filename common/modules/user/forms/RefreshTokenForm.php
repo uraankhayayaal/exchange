@@ -11,7 +11,7 @@ final class RefreshTokenForm extends BaseForm
      */
     public $refreshToken;
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             [

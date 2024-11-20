@@ -14,7 +14,7 @@ abstract class BaseResponseData
     public const STATUS_SUCCESS = 'success';
     public const STATUS_ERROR = 'error';
 
-    public static function success($data) : array
+    public static function success($data): array
     {
         $result = [
             'status' => self::STATUS_SUCCESS,
@@ -39,7 +39,7 @@ abstract class BaseResponseData
         return $result;
     }
 
-    public static function error(Model $data) : array
+    public static function error(Model $data): array
     {
         Yii::$app->response->statusCode = 422;
 
@@ -50,7 +50,7 @@ abstract class BaseResponseData
         ];
     }
 
-    public static function errorMessage(string $message) : array
+    public static function errorMessage(string $message): array
     {
         Yii::$app->response->statusCode = 500;
 
@@ -61,7 +61,7 @@ abstract class BaseResponseData
         ];
     }
 
-    public static function forbidden(string $message) : array
+    public static function forbidden(string $message): array
     {
         Yii::$app->response->statusCode = self::CODE_FORBIDDEN;
 
@@ -71,8 +71,8 @@ abstract class BaseResponseData
             'data' => $message,
         ];
     }
-    
-    abstract public static function render(mixed $data) : mixed;
+
+    abstract public static function render(mixed $data): mixed;
 
     protected static function getImageUrlWithDomain(?string $url): ?string
     {

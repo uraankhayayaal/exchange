@@ -8,9 +8,9 @@ use yii\web\HttpException;
 
 abstract class BaseRepository implements BaseRepositoryInterface
 {
-    abstract public function getModelClass() : string;
+    abstract public function getModelClass(): string;
 
-    public function create(array $attributes) : ActiveRecordInterface
+    public function create(array $attributes): ActiveRecordInterface
     {
         $modelClass = $this->getModelClass();
 
@@ -29,19 +29,18 @@ abstract class BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    private function validateModel(ActiveRecordInterface $model) : void
+    private function validateModel(ActiveRecordInterface $model): void
     {
         $isValid = $model->validate();
 
-        if ($isValid === false)
-        {
+        if ($isValid === false) {
             $message = json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE);
 
             throw new HttpException(422, $message);
         }
     }
 
-    public function update(ActiveRecordInterface $model, array $attributes) : ActiveRecordInterface
+    public function update(ActiveRecordInterface $model, array $attributes): ActiveRecordInterface
     {
         $model->setAttributes($attributes);
 
@@ -56,7 +55,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    public function delete(ActiveRecordInterface $model) : bool
+    public function delete(ActiveRecordInterface $model): bool
     {
         $hasSoftDeleteAttribute = $model->hasAttribute('deleted_at');
 
@@ -71,12 +70,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    public function restore(ActiveRecordInterface $model) : bool
+    public function restore(ActiveRecordInterface $model): bool
     {
         $canBeRestore = $model->hasAttribute('deleted_at') && $model->deleted_at;
 
-        if ($canBeRestore)
-        {
+        if ($canBeRestore) {
             $model->deleted_at = null;
 
             $this->validateModel($model);

@@ -21,12 +21,12 @@ use yii\db\ActiveQuery;
  */
 final class UserRefreshToken extends ApiBaseModel
 {
-    public static function tableName() : string
+    public static function tableName(): string
     {
         return '{{%user_refresh_token}}';
     }
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             [
@@ -64,25 +64,25 @@ final class UserRefreshToken extends ApiBaseModel
         ];
     }
 
-    public function getUser() : ActiveQuery
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, [
             'id' => 'user_id',
         ]);
     }
 
-    public function setExpiredAt() : void
+    public function setExpiredAt(): void
     {
-        $this->expired_at = (new DateTime)->modify('+7 days')->getTimestamp();
+        $this->expired_at = (new DateTime())->modify('+7 days')->getTimestamp();
     }
 
-    public function generateRefreshToken() : void
+    public function generateRefreshToken(): void
     {
         $this->refresh_token = Yii::$app->security->generateRandomString(64);
     }
 
-    public function isExpired() : bool
+    public function isExpired(): bool
     {
         return time() >= $this->expired_at;
-    }    
+    }
 }

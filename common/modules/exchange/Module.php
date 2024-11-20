@@ -8,7 +8,7 @@ use common\modules\exchange\services\interfaces\ExchangeServiceInterface;
 
 class Module extends BaseModule
 {
-    protected function bindServices() : void
+    protected function bindServices(): void
     {
         $this->getContainer()->set(ExchangeServiceInterface::class, ExchangeService::class);
     }

@@ -9,7 +9,7 @@ use Yii;
 
 final class User extends BaseUser
 {
-    public function behaviors() : array
+    public function behaviors(): array
     {
         return ArrayHelper::merge(parent::behaviors(), [
             UserObserverBehavior::class,
@@ -87,12 +87,12 @@ final class User extends BaseUser
         ];
     }
 
-    public function setPasswordHash(string $password) : void
+    public function setPasswordHash(string $password): void
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
-    public function generateEmailConfirmToken() : void
+    public function generateEmailConfirmToken(): void
     {
         $this->email_confirm_token = Yii::$app->security->generateRandomString(64);
     }

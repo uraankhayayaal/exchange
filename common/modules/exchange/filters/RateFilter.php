@@ -8,7 +8,7 @@ use yii\data\DataProviderInterface;
 
 class RateFilter
 {
-    public function getDataProvider(array $data, ?string $filter = null) : DataProviderInterface
+    public function getDataProvider(array $data, ?string $filter = null): DataProviderInterface
     {
         return new ArrayDataProvider([
             'allModels' => $this->getFilteredQuery($data, $filter),
@@ -20,7 +20,7 @@ class RateFilter
                 ],
                 'defaultOrder' => [
                     'rateUsd' => SORT_DESC,
-                ]
+                ],
             ],
             'pagination' => [
                 'pageSize' => 200,
@@ -33,7 +33,7 @@ class RateFilter
         if ($filter !== null) {
             $filters = explode(',', $filter); // TODO: Нужна валидация или просто проверка
             $data = array_filter($data, static function (Rate $rate) use ($filters) {
-                return in_array($rate->symbol, $filters);
+                return in_array($rate->symbol, $filters, true);
             });
         }
 

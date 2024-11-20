@@ -11,7 +11,7 @@ use Yii;
 
 final class SwaggerController extends BaseFrontController implements SwaggerControllerInterface
 {
-    public function actionIndex() : string
+    public function actionIndex(): string
     {
         $this->layout = false;
 
@@ -20,27 +20,25 @@ final class SwaggerController extends BaseFrontController implements SwaggerCont
         return $this->render('index');
     }
 
-    public function actionOpenapi() : string
+    public function actionOpenapi(): string
     {
         header('Content-Type: application/x-yaml');
-    
+
         return $this->getOpenApi()->toYaml();
     }
 
-    private function getOpenApi() : OpenApi
+    private function getOpenApi(): OpenApi
     {
         $sources = [
             Yii::getAlias('@frontend/controllers/interfaces'),
         ];
 
-        foreach (array_keys(Yii::$app->modules) as $id)
-        {
+        foreach (array_keys(Yii::$app->modules) as $id) {
             $source = Yii::getAlias('@common/modules/' . $id . '/controllers/interfaces');
 
             $isFileExists = file_exists($source);
 
-            if ($isFileExists)
-            {
+            if ($isFileExists) {
                 $sources[] = $source;
             }
         }

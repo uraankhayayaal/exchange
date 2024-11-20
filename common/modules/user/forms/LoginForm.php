@@ -18,7 +18,7 @@ final class LoginForm extends BaseForm
      */
     public $password;
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             [
@@ -47,19 +47,17 @@ final class LoginForm extends BaseForm
         ];
     }
 
-    public function validatePassword(string $attribute) : void
+    public function validatePassword(string $attribute): void
     {
         $hasErrors = $this->hasErrors();
 
-        if ($hasErrors)
-        {
+        if ($hasErrors) {
             return;
         }
 
         $user = Yii::$container->get(UserRepositoryInterface::class)->getActiveUserByEmail($this->email);
 
-        if (is_null($user) || $user->validatePassword($this->password) === false)
-        {
+        if (is_null($user) || $user->validatePassword($this->password) === false) {
             $this->addError($attribute, 'Incorrect email or password.');
         }
     }

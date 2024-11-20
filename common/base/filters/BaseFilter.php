@@ -20,43 +20,41 @@ abstract class BaseFilter
         ]);
     }
 
-    abstract public function getDataProvider(ActiveQueryInterface $query) : DataProviderInterface;
+    abstract public function getDataProvider(ActiveQueryInterface $query): DataProviderInterface;
 
-    abstract protected function getSearchModel() : string;
+    abstract protected function getSearchModel(): string;
 
-    protected function getAttributeMap() : array
+    protected function getAttributeMap(): array
     {
         return [];
     }
 
-    protected function getFilteredQuery(ActiveQueryInterface $query) : ActiveQueryInterface
+    protected function getFilteredQuery(ActiveQueryInterface $query): ActiveQueryInterface
     {
         $filterCondition = $this->getFilterCondition();
 
-        if ($filterCondition)
-        {
+        if ($filterCondition) {
             $query->andWhere($filterCondition);
         }
 
         return $query;
     }
 
-    protected function getFilterCondition() : ?array
+    protected function getFilterCondition(): ?array
     {
         $filterCondition = null;
 
         $isLoad = $this->activeDataFilter->load(Yii::$app->request->queryParams);
 
-        if ($isLoad)
-        {
+        if ($isLoad) {
             $filterCondition = $this->activeDataFilter->build();
 
-            if ($filterCondition === false)
-            {
+            if ($filterCondition === false) {
                 Yii::error(serialize($this->activeDataFilter), 'BaseFilter');
 
                 throw new HttpException(
-                    422, json_encode($this->activeDataFilter->errors, JSON_UNESCAPED_UNICODE)
+                    422,
+                    json_encode($this->activeDataFilter->errors, JSON_UNESCAPED_UNICODE)
                 );
             }
         }

@@ -7,5 +7,5 @@ use common\modules\user\models\UserRefreshToken;
 
 interface UserRefreshTokenRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getActiveUserRefreshTokenByRefreshToken(string $refreshToken) : ?UserRefreshToken;
+    public function getActiveUserRefreshTokenByRefreshToken(string $refreshToken): ?UserRefreshToken;
 }

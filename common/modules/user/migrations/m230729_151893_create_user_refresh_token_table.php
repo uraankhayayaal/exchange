@@ -10,7 +10,7 @@ final class m230729_151893_create_user_refresh_token_table extends Migration
     /**
      * @inheritDoc
      */
-    public function safeUp() : void
+    public function safeUp(): void
     {
         $this->createTable('{{%user_refresh_token}}', [
             'id' => $this->primaryKey(),
@@ -31,7 +31,7 @@ final class m230729_151893_create_user_refresh_token_table extends Migration
     /**
      * @inheritDoc
      */
-    public function safeDown() : void
+    public function safeDown(): void
     {
         $this->dropTable('{{%user_refresh_token}}');
     }

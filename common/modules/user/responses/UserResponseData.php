@@ -10,12 +10,11 @@ use yii\helpers\ArrayHelper;
 
 final class UserResponseData extends BaseResponseData
 {
-    public static function render(mixed $data) : mixed
+    public static function render(mixed $data): mixed
     {
         $isEmpty = empty($data);
 
-        if ($isEmpty)
-        {
+        if ($isEmpty) {
             return $data;
         }
 

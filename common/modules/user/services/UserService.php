@@ -20,7 +20,7 @@ class UserService extends BaseService implements UserServiceInterface
     /**
      * @inheritDoc
      */
-    public function getOneByEmail(string $email) : ?User
+    public function getOneByEmail(string $email): ?User
     {
         return User::find()->where(['email' => $email])->one();
     }
@@ -28,7 +28,7 @@ class UserService extends BaseService implements UserServiceInterface
     /**
      * @inheritDoc
      */
-    public function create(UserForm $userForm) : User
+    public function create(UserForm $userForm): User
     {
         $user = new User();
         $user->username = $userForm->username;
@@ -46,7 +46,7 @@ class UserService extends BaseService implements UserServiceInterface
     /**
      * @inheritDoc
      */
-    public function addPrizeForUser(int $userId, int $prize) : User
+    public function addPrizeForUser(int $userId, int $prize): User
     {
         $user = User::findOne(['id' => $userId]);
         $user->updateAttributes(['prize' => $user->prize + $prize]);
@@ -56,7 +56,7 @@ class UserService extends BaseService implements UserServiceInterface
     /**
      * @inheritDoc
      */
-    public function sendEmail(User $user, string $password) : void
+    public function sendEmail(User $user, string $password): void
     {
         Yii::$app->mailer
             ->compose(
@@ -69,7 +69,7 @@ class UserService extends BaseService implements UserServiceInterface
             ->send();
     }
 
-    public function getRolesById(int $id) : array
+    public function getRolesById(int $id): array
     {
         $auth = Yii::$app->authManager;
 
@@ -79,9 +79,9 @@ class UserService extends BaseService implements UserServiceInterface
             ->innerJoin('auth_item', 'auth_item.name = item_name')
             ->where([
                 'auth_item.type' => Item::TYPE_ROLE,
-                'user_id' => $id
+                'user_id' => $id,
             ]);
-            
+
         return $query->all();
     }
 }

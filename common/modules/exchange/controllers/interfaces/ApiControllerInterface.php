@@ -23,7 +23,7 @@ interface ApiControllerInterface
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]
     )]
-    public function actionRates() : array;
+    public function actionRates(): array;
 
     #[OA\Post(
         // path: '/api/v1?method=convert',
@@ -43,5 +43,5 @@ interface ApiControllerInterface
             new OA\Response(response: 200, description: 'Успешный ответ'),
         ]
     )]
-    public function actionConvert() : array;
+    public function actionConvert(): array;
 }

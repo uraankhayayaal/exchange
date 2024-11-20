@@ -18,25 +18,25 @@ class VerifyEmailFormTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
             'user' => [
                 'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php'
-            ]
+                'dataFile' => codecept_data_dir() . 'user.php',
+            ],
         ]);
     }
 
     public function testVerifyWrongToken()
     {
-        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function() {
+        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function () {
             new VerifyEmailForm('');
         });
 
-        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function() {
+        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function () {
             new VerifyEmailForm('notexistingtoken_1391882543');
         });
     }
 
     public function testAlreadyActivatedToken()
     {
-        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function() {
+        $this->tester->expectThrowable('\yii\base\InvalidArgumentException', function () {
             new VerifyEmailForm('already_used_token_1548675330');
         });
     }

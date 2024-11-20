@@ -16,7 +16,7 @@ class ConvertForm extends Model
      * @var string
      */
     public $currency_to;
-    
+
     /**
      * @var float
      */
@@ -25,7 +25,7 @@ class ConvertForm extends Model
     /**
      * @inheritDoc
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
             [
@@ -55,7 +55,7 @@ class ConvertForm extends Model
                 'value',
                 'match',
                 'pattern' => '/^[0-9]{1,12}(\.[0-9]{0,2})?$/',
-                'when' => function($model) {
+                'when' => function ($model) {
                     return CurrencyEnum::tryFrom($model->currency_from) !== CurrencyEnum::BTC;
                 },
                 'message' => 'Для конвертации нужно указать точность до 2 знаков(в формате 0.01)',
@@ -64,7 +64,7 @@ class ConvertForm extends Model
                 'value',
                 'match',
                 'pattern' => '/^[0-9]{1,12}(\.[0-9]{10})?$/',
-                'when' => function($model) {
+                'when' => function ($model) {
                     return CurrencyEnum::tryFrom($model->currency_from) === CurrencyEnum::BTC;
                 },
                 'message' => 'Для конвертации из BTC нужно указать точность до 10 знаков(в формате 0.0000000001)',

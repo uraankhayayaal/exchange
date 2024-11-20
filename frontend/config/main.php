@@ -1,4 +1,5 @@
 <?php
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -15,7 +16,7 @@ return [
         'class' => 'yii\filters\HostControl',
         'allowedHosts' => [
             $params['allowed_host'],
-            '*.'.$params['allowed_host'],
+            '*.' . $params['allowed_host'],
             'localhost',
         ],
     ],
@@ -75,7 +76,7 @@ return [
                 'passphrase' => '',
                 'method' => \bizley\jwt\Jwt::METHOD_FILE,
             ],
-            'verifyingKey' => [ 
+            'verifyingKey' => [
                 'key' => '/app/public.pem',
                 'method' => \bizley\jwt\Jwt::METHOD_FILE,
             ],
@@ -88,7 +89,7 @@ return [
                         new \DateInterval('PT10S')
                     ),
                 ];
-            }
+            },
         ],
     ],
     'params' => $params,

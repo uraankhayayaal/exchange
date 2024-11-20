@@ -15,7 +15,7 @@ use yii\web\ForbiddenHttpException;
 
 abstract class BaseApiController extends Controller
 {
-	public function behaviors() : array
+    public function behaviors(): array
     {
         return ArrayHelper::merge(parent::behaviors(), [
             'corsFilter' => [
@@ -90,7 +90,7 @@ abstract class BaseApiController extends Controller
         ]);
     }
 
-    public function actionOptions() : void
+    public function actionOptions(): void
     {
         $options = [
             'GET',

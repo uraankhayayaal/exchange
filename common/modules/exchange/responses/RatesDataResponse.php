@@ -6,10 +6,9 @@ use common\base\responses\BaseResponseData;
 
 final class RatesDataResponse extends BaseResponseData
 {
-    public static function render(mixed $data) : mixed
+    public static function render(mixed $data): mixed
     {
-        if (empty($data))
-        {
+        if (empty($data)) {
             return $data;
         }
 
