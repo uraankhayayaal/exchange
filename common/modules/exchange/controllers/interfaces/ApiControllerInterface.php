@@ -36,7 +36,7 @@ interface ApiControllerInterface
             properties: [
                 new OA\Property(property: 'currency_from', type: 'string', format: 'text', example: 'USD'),
                 new OA\Property(property: 'currency_to', type: 'string', format: 'text', example: 'BTC'),
-                new OA\Property(property: 'value', type: 'string', format: 'text', example: '0.01'),
+                new OA\Property(property: 'value', type: 'number', format: 'number', example: '0.01'),
             ]
         )),
         responses: [

@@ -5,9 +5,8 @@ namespace common\modules\exchange\controllers;
 use common\modules\exchange\controllers\interfaces\ApiControllerInterface;
 use common\modules\exchange\services\interfaces\ExchangeServiceInterface;
 use common\base\controllers\BaseApiController;
+use common\base\responses\BaseResponseData;
 use common\modules\exchange\forms\ConvertForm;
-use common\modules\exchange\responses\ConvertDataResponse;
-use common\modules\exchange\responses\ExchangeResponseData;
 use common\modules\exchange\responses\RatesDataResponse;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -56,9 +55,9 @@ final class ApiController extends BaseApiController implements ApiControllerInte
     public function actionRates(?string $filter = null) : array
     {
         try {
-            $data = Yii::$container->get(ExchangeServiceInterface::class)->getRates($filter);
+            $data = Yii::$container->get(ExchangeServiceInterface::class)->getAll($filter);
         } catch (Exception $e) {
-            return ConvertDataResponse::errorMessage($e->getMessage());
+            return BaseResponseData::errorMessage($e->getMessage());
         }
 
         return RatesDataResponse::success($data);
@@ -66,19 +65,19 @@ final class ApiController extends BaseApiController implements ApiControllerInte
 
     public function actionConvert() : array
     {
-        $model = new ConvertForm();
+        $convertForm = new ConvertForm();
 
-        if ($model->load($this->request->post()) && $model->validate())
+        if ($convertForm->load($this->request->post(), '') && $convertForm->validate())
         {
             try {
-                $data = Yii::$container->get(ExchangeServiceInterface::class)->convert();
+                $data = Yii::$container->get(ExchangeServiceInterface::class)->convert($convertForm);
             } catch (Exception $e) {
-                return ConvertDataResponse::errorMessage($e->getMessage());
+                return BaseResponseData::errorMessage($e->getMessage());
             }
 
-            return ConvertDataResponse::success($data);
+            return $data->format();
         }
 
-        return ConvertDataResponse::error($model);
+        return BaseResponseData::error($convertForm);
     }
 }

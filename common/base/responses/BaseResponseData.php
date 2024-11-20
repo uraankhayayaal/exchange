@@ -10,6 +10,7 @@ abstract class BaseResponseData
 {
     public const CODE_SUCCESS = 200;
     public const CODE_ERROR = 422;
+    public const CODE_FORBIDDEN = 403;
     public const STATUS_SUCCESS = 'success';
     public const STATUS_ERROR = 'error';
 
@@ -60,6 +61,17 @@ abstract class BaseResponseData
         ];
     }
 
+    public static function forbidden(string $message) : array
+    {
+        Yii::$app->response->statusCode = self::CODE_FORBIDDEN;
+
+        return [
+            'status' => self::STATUS_ERROR,
+            'code' => self::CODE_FORBIDDEN,
+            'data' => $message,
+        ];
+    }
+    
     abstract public static function render(mixed $data) : mixed;
 
     protected static function getImageUrlWithDomain(?string $url): ?string

@@ -4,50 +4,94 @@ namespace common\modules\exchange\services;
 
 use common\base\services\BaseService;
 use common\modules\exchange\clients\CoincapClient;
-use common\modules\exchange\clients\dto\Rate;
+use common\modules\exchange\clients\dto\RateDTO;
+use common\modules\exchange\enums\CurrencyEnum;
+use common\modules\exchange\enums\СonvertDirectionEnum;
+use common\modules\exchange\factories\RateFactory;
+use common\modules\exchange\filters\RateFilter;
 use common\modules\exchange\services\interfaces\ExchangeServiceInterface;
 use common\modules\exchange\forms\ConvertForm;
-use yii\data\ArrayDataProvider;
-use yii\helpers\ArrayHelper;
+use common\modules\exchange\models\Rate;
+use common\modules\exchange\responses\ConvertDataResponse;
+use yii\data\DataProviderInterface;
 
 class ExchangeService extends BaseService implements ExchangeServiceInterface
 {
-    const COMMISSION_PERCENT = 2;
+    public function getAll(?string $filter = null): DataProviderInterface
+    {
+        $data = $this->getRates();
+
+        return (new RateFilter)->getDataProvider($data, $filter);
+    }
+
+    public function convert(ConvertForm $convertForm): ConvertDataResponse
+    {
+        $data = $this->getRates();
+
+        $convertDirection = $this->getConvertDirectionFromForm($convertForm);
+        $currentRate = $this->getCurrentRateFromForm($data, $convertForm);
+
+        $converted_value = number_format(
+            $convertDirection == СonvertDirectionEnum::DIRECT
+                ? $convertForm->value * $currentRate->rateUsd
+                : $convertForm->value / $currentRate->rateUsd,
+            CurrencyEnum::tryFrom($convertForm->currency_to) === CurrencyEnum::BTC
+                ? 10
+                : 2,
+            '.',
+            '',
+        );
+
+        return new ConvertDataResponse(
+            ...$convertForm->attributes,
+            rate: number_format($currentRate->rateUsd,
+                CurrencyEnum::tryFrom($convertForm->currency_to) === CurrencyEnum::BTC
+                    ? 10
+                    : 2,
+                '.',
+                '',
+            ),
+            converted_value: $converted_value,
+        );
+    }
+
     /**
-     * @param string $filter
+     * @return array<array-key,Rate>
      */
-    public function getRates(?string $filter = null): array
+    private function getRates(): array
     {
         $data = (new CoincapClient())->getRates();
 
-        if ($filter !== null) {
-            $filters = explode(',', $filter); // TODO: Нужна валидация или просто проверка
-            $data = array_filter($data, static function (Rate $rate) use ($filters) {
-                return in_array($rate->symbol, $filters);
-            });
-        }
-
-        $data = array_map(function (Rate $rate) {
-            $rate->rateUsd = $this->getRateAfterCommission($rate->rateUsd);
-            return $rate;
+        $data = array_map(function (RateDTO $rate) {
+            return RateFactory::createRateFromRateDTO($rate);
         }, $data);
 
-        usort($data, static function (Rate $a, Rate $b) {
-            return ($a->rateUsd <=> $b->rateUsd);
-        });
-
-        $allRates = ArrayHelper::map($data, 'symbol', 'rateUsd');
-
-        return $allRates;
+        return $data;
     }
 
-    public function convert(ConvertForm $convertForm): array
+    /**
+     * @param array<array-key,Rate> $data
+     */
+    private function getCurrentRateFromForm(array $data, ConvertForm $convertForm): Rate
     {
-        return [];
+        $currentRate = current(array_filter($data, function (Rate $rate) use ($convertForm, &$convertDirection) {
+            if (CurrencyEnum::tryFrom($convertForm->currency_from) === CurrencyEnum::USD)
+            {
+                $convertDirection = СonvertDirectionEnum::REVERSE;
+                return $rate->symbol === $convertForm->currency_to;
+            } else {
+                $convertDirection = СonvertDirectionEnum::DIRECT;
+                return $rate->symbol === $convertForm->currency_from;
+            }
+        }));
+
+        return $currentRate;
     }
 
-    private function getRateAfterCommission(float $value): float
+    private function getConvertDirectionFromForm(ConvertForm $convertForm): СonvertDirectionEnum
     {
-        return $value - ($value * self::COMMISSION_PERCENT / 100);
+        return CurrencyEnum::tryFrom($convertForm->currency_from) === CurrencyEnum::USD
+            ? СonvertDirectionEnum::REVERSE
+            : СonvertDirectionEnum::DIRECT;
     }
 }

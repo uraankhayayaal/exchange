@@ -2,7 +2,7 @@
 
 namespace common\modules\exchange\clients;
 
-use common\modules\exchange\clients\dto\Rate;
+use common\modules\exchange\clients\dto\RateDTO;
 use yii\httpclient\Client;
 use yii\httpclient\Exception;
 
@@ -16,7 +16,7 @@ final class CoincapClient
     }
 
     /**
-     * @return array<array-key,Rate>
+     * @return array<array-key,RateDTO>
      */
     public function getRates(): array
     {
@@ -34,7 +34,7 @@ final class CoincapClient
         /** @var array<array-key,Rate> */
         $rates = [];
         foreach ($data as $item) {
-            $rates[] = new Rate(
+            $rates[] = new RateDTO(
                 ...$item,
             );
         }

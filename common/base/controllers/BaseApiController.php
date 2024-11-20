@@ -3,12 +3,15 @@
 namespace common\base\controllers;
 
 use bizley\jwt\JwtHttpBearerAuth;
+use common\base\responses\BaseResponseData;
+use Lcobucci\JWT\Token\InvalidTokenStructure;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\filters\Cors;
 use yii\filters\VerbFilter;
 use yii\rest\Controller;
 use Yii;
+use yii\web\ForbiddenHttpException;
 
 abstract class BaseApiController extends Controller
 {
@@ -106,5 +109,15 @@ abstract class BaseApiController extends Controller
         $headers->set('Allow', $options);
         $headers->set('Access-Control-Allow-Methods', $options);
         $headers->set('Access-Control-Allow-Origin', '*');
+    }
+
+    public function beforeAction($action)
+    {
+        try {
+            return parent::beforeAction($action);
+        } catch (InvalidTokenStructure $e) {
+            $this->asJson(BaseResponseData::forbidden('Invalid token'));
+            return false;
+        }
     }
 }

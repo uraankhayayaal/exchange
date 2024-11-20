@@ -2,7 +2,7 @@
 
 namespace common\modules\exchange\clients\dto;
 
-class Rate
+class RateDTO
 {
     public function __construct(
         public string $id,
