@@ -43,7 +43,9 @@ class ExchangeService extends BaseService implements ExchangeServiceInterface
         );
 
         return new ConvertDataResponse(
-            ...$convertForm->attributes,
+            currency_from: $convertForm->currency_from,
+            currency_to: $convertForm->currency_to,
+            value: $convertForm->value,
             rate: number_format(
                 $currentRate->rateUsd,
                 CurrencyEnum::tryFrom($convertForm->currency_to) === CurrencyEnum::BTC

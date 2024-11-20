@@ -8,9 +8,6 @@ use common\modules\user\forms\UserForm;
 use common\models\User;
 use LogicException;
 use Yii;
-use yii\data\ActiveDataProvider;
-use yii\db\Query;
-use yii\rbac\Item;
 
 /**
  * Class UserService
@@ -46,16 +43,6 @@ class UserService extends BaseService implements UserServiceInterface
     /**
      * @inheritDoc
      */
-    public function addPrizeForUser(int $userId, int $prize): User
-    {
-        $user = User::findOne(['id' => $userId]);
-        $user->updateAttributes(['prize' => $user->prize + $prize]);
-        return $user;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function sendEmail(User $user, string $password): void
     {
         Yii::$app->mailer
@@ -67,21 +54,5 @@ class UserService extends BaseService implements UserServiceInterface
             ->setTo([$user->email])
             ->setSubject('Ваш личный кабинет на сайте ' . Yii::$app->name)
             ->send();
-    }
-
-    public function getRolesById(int $id): array
-    {
-        $auth = Yii::$app->authManager;
-
-        $query = (new Query())
-            ->select('item_name')
-            ->from($auth->assignmentTable)
-            ->innerJoin('auth_item', 'auth_item.name = item_name')
-            ->where([
-                'auth_item.type' => Item::TYPE_ROLE,
-                'user_id' => $id,
-            ]);
-
-        return $query->all();
     }
 }

@@ -3,6 +3,7 @@
 namespace common\modules\exchange\clients;
 
 use common\modules\exchange\clients\dto\RateDTO;
+use common\modules\exchange\models\Rate;
 use yii\httpclient\Client;
 use yii\httpclient\Exception;
 

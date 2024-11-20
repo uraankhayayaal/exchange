@@ -1,0 +1,30 @@
+parameters:
+    level: 2
+    paths:
+        - common
+        - frontend
+        - backend
+        - console
+    bootstrapFiles:
+        - vendor/yiisoft/yii2/Yii.php
+    excludePaths:
+        - 'runtime/*'
+        - 'vendor/*'
+        - 'tests/*'
+        - '*/tests/*'
+    universalObjectCratesClasses:
+        - stdClass
+    ignoreErrors:
+        - '#Call to an undefined static method Yii::setAlias\(\)#'
+        - '#Call to an undefined static method Yii::getAlias\(\)#'
+        - '#Call to an undefined static method Yii::error\(\)#'
+        - '#Access to an undefined property yii\\web\\IdentityInterface::\$username#'
+        - '#Call to an undefined static method Yii::powered\(\)#'
+        - '#Access to an undefined property __Application|yii\\console\\Application|yii\\web\\Application::\$jwt#'
+        - '#Access to an undefined static property Yii::\$container#'
+        - '#Call to an undefined static method Yii::createObject\(\)#'
+        - '#Call to an undefined method yii\\db\\ActiveRecordInterface::validate\(\)#'
+        - '#Call to an undefined method yii\\db\\ActiveRecordInterface::getErrors\(\)#'
+        - '#Call to an undefined method yii\\db\\ActiveRecordInterface::setAttributes\(\)#'
+        - '#Access to an undefined property yii\\db\\ActiveRecordInterface::\$deleted_at#'
+        - '#Access to an undefined property yii\\data\\DataProviderInterface::\$models#'

@@ -11,9 +11,5 @@ interface UserServiceInterface
 
     public function getOneByEmail(string $email): ?User;
 
-    public function addPrizeForUser(int $userId, int $prize): User;
-
     public function sendEmail(User $user, string $password): void;
-
-    public function getRolesById(int $id): array;
 }

@@ -8,12 +8,12 @@ use common\models\User;
 class UserForm extends Model
 {
     /**
-     * @property int
+     * @var int
      */
     public $id;
 
     /**
-     * @property string
+     * @var string
      */
     public $username;
 

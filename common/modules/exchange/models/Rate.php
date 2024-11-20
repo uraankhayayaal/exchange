@@ -2,9 +2,7 @@
 
 namespace common\modules\exchange\models;
 
-use Yii;
-
-class Rate extends yii\base\Model
+class Rate extends \yii\base\Model
 {
     /**
      * @var string
